@@ -5,8 +5,8 @@ pipeline {
         choice(name: 'goals', choices: ['package', 'clean install', 'verify'], description: 'Pick something')
     }
     environment {
-        image_name = 'spc'
-        tag_name = '1.0'
+        image_name = 'nginx'
+        tag_name = '1.29'
     }
 
 
@@ -51,17 +51,18 @@ pipeline {
 
         //         rtPublishBuildInfo(serverId: 'JFROG')
         //     }
-        // }
-
-       
-        stage('Image push to the ECR and pulling from dockerhub') {
+        // }  
+         stage('Image push to the ECR and pulling from dockerhub') {
             steps {
-                sh """docker image pull nginx:1.29 && \
+                sh """docker pull $image_name:$tag_name && \
                       aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 003364515214.dkr.ecr.ap-south-1.amazonaws.com && \
-                      docker tag ${image_name}:${tag_name} 003364515214.dkr.ecr.ap-south-1.amazonaws.com/dev/nginx:latest && \
+                      docker tag $image_name:$tag_name 003364515214.dkr.ecr.ap-south-1.amazonaws.com/dev/nginx:latest && \
                       docker images && \
                       docker push 003364515214.dkr.ecr.ap-south-1.amazonaws.com/dev/nginx:latest"""
             }
         }
     }
 }
+    
+       
+       
