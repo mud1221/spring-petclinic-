@@ -2,9 +2,9 @@ pipeline {
     agent { label 'java' }
 
     environment {
-        image_name = 'java'
+        image_name = 'spring-petclinic'
         tag_name = "${BUILD_NUMBER}"
-        ecr_repo = '003364515214.dkr.ecr.ap-south-1.amazonaws.com/spring-petclinic'
+        ecr_repo = '003364515214.dkr.ecr.ap-south-1.amazonaws.com/myapp'
         region = 'ap-south-1'
     }
 
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Trivy Scan') {
             steps {
-         sh '''trivy image spring-petclinic:${BUILD_NUMBER} || true'''
+              '''sh "trivy image ${image_name}:${tag_name} || true"'''
             }
        }
 

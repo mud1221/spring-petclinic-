@@ -22,8 +22,9 @@ spec:
         app: java
     spec:
       containers:
-        - name: myjava-container
-          image: 003364515214.dkr.ecr.ap-south-1.amazonaws.com/myapp:latest
+        - name: spring-petclinic
+          image: 003364515214.dkr.ecr.ap-south-1.amazonaws.com/myapp:BUILD_NUMBER
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           livenessProbe:
