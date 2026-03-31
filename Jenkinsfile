@@ -29,13 +29,18 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 sh """
-                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecr_repo}
+                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin 003364515214.dkr.ecr.ap-south-1.amazonaws.com
                 docker tag ${image_name}:${tag_name} ${ecr_repo}:${tag_name}
                 docker push ${ecr_repo}:${tag_name}
                 """
             }
         }
-
+        stage('Update Deployment Image') {
+            steps {
+             sh """ sed -i 's|image:.*|image: ${ecr_repo}:${tag_name}|g' k8s/dp.yml
+                     cat k8s/dp.yml """
+            }
+        }
         stage('Deploy to EKS') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
