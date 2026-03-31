@@ -24,10 +24,8 @@ pipeline {
         stage('Trivy Scan') {
             steps {
          sh '''trivy image spring-petclinic:${BUILD_NUMBER} || true'''
-    }
-}
             }
-        }
+       }
 
         stage('Push to ECR') {
             steps {
