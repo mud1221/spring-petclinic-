@@ -39,8 +39,8 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                    sh 'kubectl apply -f dp.yaml'
-                    sh 'kubectl apply -f svc.yaml'
+                    sh 'kubectl apply -f  k8s/dp.yaml'
+                    sh 'kubectl apply -f  k8s/svc.yaml'
                 }
             }
         }
