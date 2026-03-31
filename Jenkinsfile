@@ -23,10 +23,9 @@ pipeline {
         }
         stage('Trivy Scan') {
             steps {
-              '''sh "trivy image ${image_name}:${tag_name} || true"'''
+                sh "trivy image ${image_name}:${tag_name} || true"
             }
        }
-
         stage('Push to ECR') {
             steps {
                 sh """
