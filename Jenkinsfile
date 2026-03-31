@@ -2,7 +2,7 @@ pipeline {
     agent { label 'java' }
 
     environment {
-        image_name = 'spring-petclinic'
+        image_name = 'java'
         tag_name = "${BUILD_NUMBER}"
         ecr_repo = '003364515214.dkr.ecr.ap-south-1.amazonaws.com/spring-petclinic'
         region = 'ap-south-1'
