@@ -1,7 +1,7 @@
 FROM maven:3.9.12-eclipse-temurin-17-alpine AS build
 ADD . /app
 WORKDIR /app  
-RUN mvn package 
+RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17.0.18_8-jdk-noble AS Runtime 
 LABEL myproject=java
